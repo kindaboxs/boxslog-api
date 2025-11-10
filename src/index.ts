@@ -11,7 +11,7 @@ import app from '@/app';
 /**
  * Config
  */
-import { env } from '@/config/env';
+import { env } from '@/config';
 
 serve(
   {

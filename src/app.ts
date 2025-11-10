@@ -1,12 +1,12 @@
 /**
  * Lib
  */
-import createApp from '@/lib/create-app';
+import { createApp } from '@/lib';
 
 /**
  * Routes
  */
-import indexRoute from '@/routes/index.route';
+import { indexRoute } from '@/routes';
 
 // Create app
 const app = createApp();
