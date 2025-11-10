@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
+import globals from 'globals';
 
 export default defineConfig(
   {
@@ -37,6 +38,7 @@ export default defineConfig(
       reportUnusedDisableDirectives: true,
     },
     languageOptions: {
+      globals: globals.node,
       parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig.json',
