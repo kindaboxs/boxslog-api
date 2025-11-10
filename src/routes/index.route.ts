@@ -1,7 +1,7 @@
 /**
- * Node modules
+ * Constants
  */
-import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import { HttpStatusCodes, HttpStatusPhrases } from '@/constants';
 
 /**
  * Config
@@ -21,13 +21,13 @@ indexRoute.get('/', (c) => {
       name: 'BoxsLog API',
       description: `BoxsLog API is a simple API for me to create/write blog posts.`,
       version: '1.0.0',
-      status: ReasonPhrases.OK,
+      status: HttpStatusPhrases.OK,
       message: 'API is Live',
       environment: env.NODE_ENV,
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
     },
-    StatusCodes.OK,
+    HttpStatusCodes.OK,
   );
 });
 
