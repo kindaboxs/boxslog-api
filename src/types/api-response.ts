@@ -9,3 +9,8 @@ export type ApiErrorResponse = {
     stack?: string;
   };
 };
+
+export type ApiSuccessResponse<T = void> = {
+  success: true;
+  message: string;
+} & (T extends void ? object : { data: T });
