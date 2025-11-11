@@ -2,6 +2,8 @@
  * Node modules
  */
 import { zValidator } from '@hono/zod-validator';
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 /**
  * Constants
@@ -26,8 +28,14 @@ import { createBlogSchema } from '@/schemas';
 /**
  * Utils
  */
-import { contentCleaner, slugGenerator } from '@/utils';
+import { slugGenerator } from '@/utils';
 import type { ApiSuccessResponse, BlogResponse } from '@/types';
+
+/**
+ * Purify the blog content
+ */
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
 
 const createBlogHandler = factory.createHandlers(
   requireAuth,
@@ -38,7 +46,7 @@ const createBlogHandler = factory.createHandlers(
     const db = c.get('db');
 
     const slug = slugGenerator(title);
-    const cleanedContent = contentCleaner(content);
+    const cleanedContent = purify.sanitize(content);
 
     const newBlog = await db.blog.create({
       data: {
