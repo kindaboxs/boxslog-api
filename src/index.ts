@@ -2,6 +2,8 @@ import { serve } from '@hono/node-server';
 
 import { env } from '@/configs/env';
 
+import { logger } from '@/lib/pino';
+
 import app from '@/app';
 
 const port = env.PORT;
@@ -12,7 +14,7 @@ const server = serve(
     port,
   },
   info => {
-    console.log(`Server is running on http://localhost:${info.port}`);
+    logger.info(`Server is running on http://localhost:${info.port}`);
   }
 );
 
@@ -24,7 +26,7 @@ process.on('SIGINT', () => {
 process.on('SIGTERM', () => {
   server.close(err => {
     if (err) {
-      console.error(err);
+      logger.error(err);
       process.exit(1);
     }
     process.exit(0);
