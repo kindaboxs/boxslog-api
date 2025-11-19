@@ -1,18 +1,26 @@
 import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
 
-const app = new Hono();
+import { env } from '@/configs/env';
 
-app.get('/', c => {
-  return c.text('Hello Hono!');
-});
+import app from '@/app';
 
-serve(
-  {
-    fetch: app.fetch,
-    port: 3000,
-  },
-  info => {
-    console.log(`Server is running on http://localhost:${info.port}`);
+const port = env.PORT;
+
+async function main() {
+  try {
+    serve(
+      {
+        fetch: app.fetch,
+        port,
+      },
+      info => {
+        console.log(`Server is running on http://localhost:${info.port}`);
+      }
+    );
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
   }
-);
+}
+
+void main();
