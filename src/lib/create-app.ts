@@ -14,10 +14,11 @@ import serveEmojiFavicon from '@/middlewares/serve-emoji-favicon';
 export default function createApp() {
   const app = factory.createApp();
 
-  app.use(requestId());
-  app.use(appLogger());
-  app.use(prettyJSON());
+  app.use('*', requestId());
+  app.use('*', appLogger());
+  app.use('*', prettyJSON());
   app.use(
+    '*',
     cors({
       origin: env.CORS_ORIGINS,
       allowHeaders: ['Content-Type', 'Authorization'],
@@ -27,7 +28,7 @@ export default function createApp() {
       credentials: true,
     })
   );
-  app.use(serveEmojiFavicon('📚'));
+  app.use('*', serveEmojiFavicon('📚'));
 
   app.notFound(notFound);
   app.onError(onError);
