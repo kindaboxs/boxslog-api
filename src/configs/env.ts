@@ -13,7 +13,7 @@ export const env = createEnv({
       .string()
       .default('')
       .transform(val => (val === '' ? [] : val.split(','))),
-    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_SECRET: z.string().trim().min(32),
     BETTER_AUTH_URL: z.url(),
   },
 
