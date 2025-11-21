@@ -1,6 +1,6 @@
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import {
-  admin,
+  admin as adminPlugin,
   anonymous,
   bearer,
   jwt,
@@ -11,6 +11,7 @@ import {
 
 import { env } from '@/configs/env';
 
+import { ac } from '@/lib/auth/permissions';
 import { db } from '@/lib/db';
 
 import { UserRole } from '@/generated/prisma/enums';
@@ -35,9 +36,10 @@ export const authConfig = {
     maxPasswordLength: 128,
   },
   plugins: [
-    admin({
+    adminPlugin({
       adminRoles: [UserRole.ADMIN],
       defaultRole: UserRole.USER,
+      ac,
     }),
     anonymous(),
     bearer(),
