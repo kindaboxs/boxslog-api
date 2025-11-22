@@ -41,8 +41,10 @@ const ensureUniqueSlug = async (
     attempts++;
   }
 
-  // if attempts failed, return the original slug
-  return slug;
+  // if attempts failed, throw an error
+  throw new Error(
+    `Unable to generate unique slug after ${maxAttempts} attempts, last candidate: ${uniqueSlug}`
+  );
 };
 
 export const createUniqueSlug = async (
