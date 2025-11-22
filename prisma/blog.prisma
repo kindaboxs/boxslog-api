@@ -1,0 +1,26 @@
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Blog {
+  id            String     @id @default(uuid())
+  authorId      String
+  title         String
+  slug          String     @unique
+  description   String?
+  content       String     @db.Text
+  status        BlogStatus @default(DRAFT)
+  viewsCount    Int        @default(0)
+  likesCount    Int        @default(0)
+  commentsCount Int        @default(0)
+
+  author User @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([title])
+  @@index([slug])
+  @@map("blogs")
+}
