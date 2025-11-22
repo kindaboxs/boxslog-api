@@ -4,16 +4,20 @@ import * as HttpStatusCodes from '@/constants/http-status-codes.constant';
 
 import factory from '@/lib/factory';
 
-import { requireAuth } from '@/middlewares/auth.middleware';
+import { requireAuth, requireRole } from '@/middlewares/auth.middleware';
 
 import { createBlogSchema } from '@/schemas/blog.schema';
 
 import { createUniqueSlug } from '@/utils/slug.helper';
 
+import { toBlogResponse } from '@/types/blog.type';
+
+import type { Blog } from '@/types/blog.type';
 import type { ApiSuccessResponse } from '@/types/response.types';
 
 export const createBlogHandler = factory.createHandlers(
   requireAuth,
+  requireRole(['ADMIN']),
   zValidator('form', createBlogSchema),
   async (c) => {
     const { title, content, description, status } = c.req.valid('form');
@@ -34,13 +38,16 @@ export const createBlogHandler = factory.createHandlers(
         slug,
         authorId: user.id,
       },
+      include: {
+        author: true,
+      },
     });
 
-    return c.json<ApiSuccessResponse<typeof blog>>(
+    return c.json<ApiSuccessResponse<Blog>>(
       {
         success: true,
         message: 'Blog has been created!',
-        data: blog,
+        data: toBlogResponse(blog),
       },
       HttpStatusCodes.CREATED
     );
