@@ -18,7 +18,7 @@ import { UserRole } from '@/generated/prisma/enums';
 
 import type { BetterAuthOptions } from 'better-auth';
 
-export const authConfig = {
+export const authConfig: BetterAuthOptions = {
   appName: 'boxslog-api',
   advanced: {
     database: {
@@ -53,4 +53,4 @@ export const authConfig = {
     expiresIn: 60 * 60 * 24 * 3, // 3 days
   },
   trustedOrigins: env.CORS_ORIGINS,
-} satisfies BetterAuthOptions;
+};

@@ -14,3 +14,7 @@ export interface ApiErrorResponse extends BaseResponse {
     stack?: string;
   };
 }
+
+export type ApiSuccessResponse<T = void> = BaseResponse & {
+  success: true;
+} & (T extends void ? object : { data: T });

@@ -4,11 +4,11 @@ import { UserRole } from '@/generated/prisma/enums';
 
 import type { BetterAuthOptions } from 'better-auth';
 
-export const authActions = {
+export const authActions: BetterAuthOptions = {
   databaseHooks: {
     user: {
       create: {
-        before: async user => {
+        before: async (user) => {
           const isAdminEmail = env.ADMIN_EMAILS.includes(user.email);
 
           if (isAdminEmail) {
@@ -27,4 +27,4 @@ export const authActions = {
       },
     },
   },
-} satisfies BetterAuthOptions;
+};
