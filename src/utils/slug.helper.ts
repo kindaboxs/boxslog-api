@@ -2,16 +2,19 @@
 import { customAlphabet } from 'nanoid';
 
 const slugify = (text: string): string => {
-  return text
+  const slug = text
     .toString()
     .toLowerCase()
     .trim()
     .normalize('NFD') // Remove accents/diacritics (é → e, ñ → n)
     .replace(/[\u0300-\u036f]/g, '')
+    .replace(/_/g, '-') // Replace underscores with hyphens
     .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/[^\w-]+/g, '') // Replace special characters
-    .replace(/--+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/[^a-z0-9-]+/g, '') // Keep only lowercase letters, digits, and hyphens
+    .replace(/-+/g, '-') // Collapse multiple hyphens to single hyphen
     .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+
+  return slug;
 };
 
 const generateUniqueSlug = (baseSlug: string, length = 6): string => {
